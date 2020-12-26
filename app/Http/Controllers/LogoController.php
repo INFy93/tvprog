@@ -12,8 +12,6 @@ use Illuminate\Support\Facades\Auth;
 class LogoController extends Controller
 {
 
-
-
     public function submit($id, LogoRequest $request)
     { //добавляем новый логотип
 

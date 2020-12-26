@@ -14,8 +14,8 @@ class ItvController extends Controller
     { //функция отображения всех телеканалов с логотипами
 
         $itv = Itv::leftJoin('logos', function ($join) {
-                $join->on('logos.ch_id', '=', 'itv.id');
-            })
+            $join->on('logos.ch_id', '=', 'itv.id');
+        })
             ->select('itv.id AS channel_id', 'itv.name AS channel_name', 'itv.tv_genre_id as genre_id', DB::raw('IFNULL(logos.path, "images/no_logo.png") as logo_path'))
             ->orderBy('itv.number', 'asc')
             ->get();
