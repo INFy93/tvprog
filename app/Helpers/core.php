@@ -111,13 +111,6 @@ class Helpers
         return $month_name . $week_day;
     }
 
-    public static function getLogo($channel_id)
-    {
-        $logo = Logos::where('ch_id', $channel_id)->first();
-
-        return $logo;
-    }
-
     public static function getFavourSet($channel_id, $cookie_set) //формируем тип картинки, класс ссылки и блок для избранного
     {
         if (in_array($channel_id, $cookie_set)) {
