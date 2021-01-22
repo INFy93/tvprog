@@ -1,14 +1,8 @@
 <?php
+
+use App\Http\Controllers\TariffController;
 use Illuminate\Support\Facades\Route;
 
-//чистка кэша после заливки на хост
-Route::get('/clear-cache', function() {
-    $exitCode = Artisan::call('cache:clear');
-    $exitCode = Artisan::call('config:clear');
-    $exitCode = Artisan::call('route:clear');
-    // return what you want
-    return "Кэш, кэш конфига и роутов очищен";
-});
 
 Route::get('/', 'ItvController@getChannelData'
 )->name('home'); //главная
@@ -28,6 +22,10 @@ Route::get('/cookie/set/{id}', 'CookieController@setCookie'
 
 Route::get('/cookie/delete/{id}', 'CookieController@deleteChannelFromCookie'
 )->name('delete_cookie'); //удаляем канал из избранного через куки
+
+Route::get('/tariff/{id}', 'TariffController@getChannelByTariff'
+)->name('tariff');
+
 
 // админская часть
 Auth::routes();
@@ -57,4 +55,21 @@ Route::middleware('auth')->group(function () {
 
   Route::get('/dashboard/logout', '\App\Http\Controllers\Auth\LoginController@logout'
   )->name('logout'); //разлогин
+
+  Route::get('/clear-cache', function() {
+    $exitCode = Artisan::call('cache:clear');
+    $exitCode = Artisan::call('config:clear');
+    $exitCode = Artisan::call('route:clear');
+    // return what you want
+    return "Кэш, кэш конфига и роутов очищен";
+});
+
+Route::get('/storage-link', function () {
+  if (Artisan::call('storage:link')) {
+    return "Линк создан";
+  } else {
+    return "Ошибка";
+  };
+});
+
 });

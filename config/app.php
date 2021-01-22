@@ -229,6 +229,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'ProgrammList' => App\Helpers\ProgrammList::class,
         'Helpers' => App\Helpers\Helpers::class,
+        'Tariff' => App\Helpers\Tariff::class,
 
     ],
 
