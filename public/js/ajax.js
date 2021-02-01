@@ -1,4 +1,10 @@
 $(document).ready(function() { //setting up mixit
+    $.ajaxSetup({ //setting AJAX
+        headers: {
+        'X-CSRF-Token': $('meta[name="_token"]').attr('content')
+        }
+    });
+
     $('.no_favour').hide();
 
     mixitup('.channels', {
@@ -57,12 +63,25 @@ var btn = $('#button'); //"Up" button settings
 function description(i){ //showing description of TV-program
 	var d_id = $(i).attr('id'); //takin' TV-program ID
 	var route = '/descr/'+d_id; //preparing route
-	$.ajaxSetup({ //setting AJAX
-    headers: {
-    'X-CSRF-Token': $('meta[name="_token"]').attr('content')
-    }
-});
+		    $.ajax({
+	        type : 'GET',
+	        url : route,
+					dataType: "json",
+					data: {id: d_id},
+	        success: function(result) {
+                if ($("#screen").length) { //if we have the "screen"-picture after current-popup, we will delete it
+                    $("#screen").remove();
+                }
+             $('#basicModal .modal-title').html(moment(result.time).format('HH:mm') + " - "+ moment(result.time_to).format('HH:mm') + " " + result.name); //displaying time and time to
+						 $('#basicModal div.modal-body').html(result.descr) //description
+	        }
+	    });
+}
 
+function descriptionCurrent(i){ //showing description of TV-program
+	var d_id = $(i).attr('id'); //takin' TV-program ID
+	var route = '/descr/current/'+d_id; //preparing route
+	var timestamp = new Date().getTime();
 		    $.ajax({
 	        type : 'GET',
 	        url : route,
@@ -70,10 +89,15 @@ function description(i){ //showing description of TV-program
 					data: {id: d_id},
 	        success: function(result) {
              $('#basicModal .modal-title').html(moment(result.time).format('HH:mm') + " - "+ moment(result.time_to).format('HH:mm') + " " + result.name); //displaying time and time to
-						 $('#basicModal div.modal-body').html(result.descr) //description
+             $('#basicModal div.modal-body').html('<img style="padding-right: 10px;" src="https://hosting.crimeastar.net/cgi-bin/channel_screenshot.cgi?' + result.number + '&timestamp='+ timestamp +'" align="left" id="screen">') //description
+             $('#basicModal div.modal-body').append(result.descr) //description
+
+
 	        }
 	    });
 }
+
+
 function onlyCurrent() { //showing only current TV-programs on clicking by checkbox
 	if ($('#onlyCurrent').is(':checked')){
 		$('.before').hide();

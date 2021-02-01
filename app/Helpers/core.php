@@ -24,7 +24,7 @@ class ProgrammList {
         public static function getCurrentProgramm($id) {
 
             $time = date("Y-m-d H:i:s");
-            $epg = Epg::select('id', 'ch_id', 'time', 'time_to', 'name', 'descr')
+            $epg = Epg::select('id', 'ch_id', 'time', 'time_to', 'name', 'descr', 'duration')
             ->where([
                 ['ch_id', '=', $id],
                 ['time', '<=', $time],
@@ -32,8 +32,16 @@ class ProgrammList {
             ])
             ->orderBy('time', 'desc')
             ->first();
-
-            return $epg;
+            if ($epg)
+            {
+                $diff = ( (strtotime($time) - strtotime($epg->time)) / (strtotime($epg->time_to) - strtotime($epg->time)) )*100; //находим процент прогресса текущей передачи
+            $progress = round($diff); //округляем
+           // dd($progress);
+            return [
+                'epg' => $epg,
+                'progress' => $progress
+            ];
+            }
         }
 
         public static function getAfterProgramm($id, $limit_key) {

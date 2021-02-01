@@ -1,0 +1,44 @@
+body
+{
+    background-color: #1f1f1f !important;
+    color: #f4f4f4;
+}
+.modal-content {
+    background-color: #1f1f1f !important;
+    color: #f4f4f4;
+}
+.bg-light {
+    background-color: #30322f !important;
+}
+h2, .channel_title, .channel_title a, .date_block, footer {
+    color: #fefefe;
+}
+
+hr {
+    border-color:#fefefe !important;
+}
+
+.after, .after a, .after a:hover, .channel_title a:hover {
+    color: #fefefe;
+}
+.current, .current a, .current a:hover {
+    color: #fefefe;
+}
+.progress {
+    background-color: #007bff80 !important;
+}
+.progress-bar {
+    background-color: #0062cc !important;
+}
+.navbar-light .navbar-brand, .nav-item, .sort-label {
+    color: #fefefe !important;
+}
+.navbar-light .navbar-nav .nav-link {
+    color: #fefefe !important;
+}
+
+.header
+{
+    background: #373737;
+    color: #f4f4f4;
+}

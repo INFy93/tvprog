@@ -13,7 +13,7 @@ class TariffController extends Controller
     public function getChannelByTariff($id) //выводим список каналов в зависимости от пакета
     {
         $tariff = Tariff::where('id', $id)->first(); //получаем название тарифа
-        $array_with_tariffs = json_decode(Http::get(env('MAGIC', 0)), true); //получаем и декодируем массив из json
+        $array_with_tariffs = json_decode(Http::get(env('CHANNEL_LIST_URL', 0)), true); //получаем и декодируем массив из json
         if ($array_with_tariffs)
         {
         $temp_array = array(); //временный массив для наполнения основного массива

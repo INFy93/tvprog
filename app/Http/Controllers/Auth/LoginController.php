@@ -22,10 +22,9 @@ class LoginController extends Controller
     use AuthenticatesUsers;
 
     public function username() //определяем поле для логина
-{
-    return 'name';
-}
-
+    {
+        return 'name';
+    }
 
     /**
      * Where to redirect users after login.
@@ -45,7 +44,8 @@ class LoginController extends Controller
     }
 
     public function logout() {
-      Auth::logout();
-      return redirect()->route('home');
-    }
+        Auth::logout();
+        return redirect()->route('home');
+      }
+
 }

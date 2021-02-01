@@ -13,11 +13,11 @@ class LogoController extends Controller {
 
 
 
-    public function submit($id, LogoRequest $request) { //добавляем новый логотип
+    public function submit($id, Request $request) { //добавляем новый логотип
 
       $logo = new Logos;
    if ($request->has('logo')) {
-        $extension = $request->file('logo')->extension(); //получаем расширение файла
+    $extension = $request->file('logo')->getClientOriginalExtension(); //получаем расширение файла
         $path = $request->file('logo')->storeAs('logos', 'channel'.$id.'.'.$extension, 'public'); //загружаем его
         $logo->ch_id = $id;
         $logo->path = $path;
@@ -65,12 +65,11 @@ class LogoController extends Controller {
         return view('logo-update', ['logo_single' => $logo_single]);
       }
 
-      public function updateLogo($id, LogoRequest $request) { //функция обновления логотипа
+      public function updateLogo($id, Request $request) { //функция обновления логотипа
         $logo = Logos::where('ch_id', $id)->first();
-     if ($request->has('logo')) {
+        if ($request->has('logo')) {
             \File::delete($logo->path);
-
-            $extension = $request->file('logo')->extension(); //получаем расширение файла
+            $extension = $request->file('logo')->getClientOriginalExtension(); //получаем расширение файла
             $path = $request->file('logo')->storeAs('logos', 'channel'.$id.'.'.$extension, 'public'); //загружаем его
 
 

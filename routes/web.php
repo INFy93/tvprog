@@ -1,8 +1,17 @@
 <?php
 
-use App\Http\Controllers\TariffController;
 use Illuminate\Support\Facades\Route;
 
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
 
 Route::get('/', 'ItvController@getChannelData'
 )->name('home'); //главная
@@ -12,6 +21,9 @@ Route::get('/channel/{id}', 'EpgController@getProgram'
 
 Route::get('/descr/{id}', 'EpgController@getDescr'
 )->name('descr'); //запрос на получение описания
+
+Route::get('/descr/current/{id}', 'EpgController@getDescrCurrent'
+)->name('descr'); //запрос на получение описания для текущей телепередачи с картинкой
 
 Route::get('/genres/{id}', 'ItvController@getGenreChannels'
 )->name('genre_channels'); //запрос на получение категорий
@@ -24,7 +36,10 @@ Route::get('/cookie/delete/{id}', 'CookieController@deleteChannelFromCookie'
 )->name('delete_cookie'); //удаляем канал из избранного через куки
 
 Route::get('/tariff/{id}', 'TariffController@getChannelByTariff'
-)->name('tariff');
+)->name('tariff'); //получение списка каналов по пакетам для вывода на основной сайт
+
+Route::get('/theme/{theme}', 'ThemeController@getTheme'
+)->name('theme-switcher'); //сохранение выбранной темы в сессии, чтобы выбор не слетал после перезагрузки страницы
 
 
 // админская часть
@@ -53,23 +68,26 @@ Route::middleware('auth')->group(function () {
   Route::post('/dashboard/logo/{id}/submit', 'LogoController@submit'
   )->name('logo_upload'); // загружаем логотип
 
-  Route::get('/dashboard/logout', '\App\Http\Controllers\Auth\LoginController@logout'
+  Route::get('/dashboard/logout', 'Auth\LoginController@logout'
   )->name('logout'); //разлогин
 
   Route::get('/clear-cache', function() {
     $exitCode = Artisan::call('cache:clear');
-    $exitCode = Artisan::call('config:clear');
-    $exitCode = Artisan::call('route:clear');
+    $exitCode1 = Artisan::call('config:clear');
+    $exitCode2 = Artisan::call('route:clear');
+    $exitCode3 = Artisan::call('view:clear');
     // return what you want
-    return "Кэш, кэш конфига и роутов очищен";
+    return Artisan::output();
 });
 
 Route::get('/storage-link', function () {
-  if (Artisan::call('storage:link')) {
-    return "Линк создан";
-  } else {
-    return "Ошибка";
-  };
+    $command = 'storage:link';
+    $result = Artisan::call($command);
+    return Artisan::output();
+});
+
+Route::get('/version', function () {
+    return app()->version();
 });
 
 });

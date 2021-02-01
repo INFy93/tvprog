@@ -13,7 +13,7 @@
     {{ csrf_field() }}
     <div class="form-group">
       <label for="logo">Выберите логотип (в формате <strong>jpg</strong>, <strong>png</strong>, <strong>svg</strong> или <strong>bmp</strong>):</label>
-      <input type="file" name="logo" id="logo" class="form-control-file">
+      <input type="file" name="logo" id="logo" class="form-control-file" onchange="ValidateSingleInput(this);">
     </div>
     <button type="submit" class="btn btn-primary">Обновить логотип</button>
 
