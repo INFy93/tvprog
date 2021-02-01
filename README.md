@@ -1,4 +1,4 @@
-<p align="center">Телепрограмма. Stalker-portal</p>
+<p align="center"><h2>Телепрограмма. Stalker-portal</h2></p>
 
 ## О телепрограмме
 
