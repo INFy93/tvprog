@@ -28,15 +28,13 @@
     integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <script async type="text/javascript"
-    src="{{ asset('js/ajax.js') }}?v=<?php echo filectime('js/ajax.js'); ?>"></script>
-<<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js">
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mixitup/3.3.1/mixitup.min.js"
-        integrity="sha512-nKZDK+ztK6Ug+2B6DZx+QtgeyAmo9YThZob8O3xgjqhw2IVQdAITFasl/jqbyDwclMkLXFOZRiytnUrXk/PM6A=="
-        crossorigin="anonymous"></script>
-    @toastr_js
-    @toastr_render
-    <script type="text/javascript" src="{{ asset('js/check.js') }}"></script>
-    @yield('scripts')
+    src="{{ asset('js/common-single.js') }}?v=<?php echo filectime('js/common-single.js'); ?>"></script>
+<script async type="text/javascript" src="{{ asset('js/cache.js') }}?v=<?php echo filectime('js/cache.js'); ?>">
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+@toastr_js
+@toastr_render
+<script type="text/javascript" src="{{ asset('js/check.js') }}"></script>
+@yield('scripts')
 
-    </html>
+</html>

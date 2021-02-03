@@ -36,7 +36,6 @@ class ProgrammList {
             {
                 $diff = ( (strtotime($time) - strtotime($epg->time)) / (strtotime($epg->time_to) - strtotime($epg->time)) )*100; //находим процент прогресса текущей передачи
             $progress = round($diff); //округляем
-           // dd($progress);
             return [
                 'epg' => $epg,
                 'progress' => $progress
@@ -161,4 +160,3 @@ class Tariff
         return str_pad($tech_id, 3, "0", STR_PAD_LEFT);
     }
 }
-?>

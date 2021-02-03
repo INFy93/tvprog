@@ -2,7 +2,7 @@ var _validFileExtensions = [".jpg", ".jpeg", ".bmp", ".svg", ".png"];
 function ValidateSingleInput(oInput) {
     if (oInput.type == "file") {
         var sFileName = oInput.value;
-         if (sFileName.length > 0) {
+        if (sFileName.length > 0) {
             var blnValid = false;
             for (var j = 0; j < _validFileExtensions.length; j++) {
                 var sCurExtension = _validFileExtensions[j];

@@ -1,10 +1,11 @@
 <!DOCTYPE html lang="ru">
 @php
-    if (session('theme') == null)
-    {
-        session(['theme' => 'app']);
-    }
+if (session('theme') == null)
+{
+session(['theme' => 'app']);
+}
 @endphp
+
 <head>
     <link rel="stylesheet" href="/css/app.css?v=<?php echo filectime('css/app.css'); ?>">
     <link rel="stylesheet" href="/css/{{ session('theme') }}.css" id="theme-link">
@@ -27,18 +28,16 @@
         <div class="row">
             @if(session('theme') == 'dark')
             <div class="col-md-2 col-lg-2 navbar-container bg-dark" id="left-panel">
-            @else
-            <div class="col-md-2 col-lg-2 navbar-container bg-light" id="left-panel">
-            @endif
-                @yield('categories')
-
-
-                <div class="col-md-10 col-lg-10 content-container">
-                    <!-- Основной контент страницы  -->
-                    @yield('content')
+                @else
+                <div class="col-md-2 col-lg-2 navbar-container bg-light" id="left-panel">
+                    @endif
+                    @yield('categories')
+                    <div class="col-md-10 col-lg-10 content-container">
+                        <!-- Основной контент страницы  -->
+                        @yield('content')
+                    </div>
                 </div>
             </div>
-        </div>
 </body>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"
     integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
@@ -51,10 +50,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mixitup/3.3.1/mixitup.min.js"
     integrity="sha512-nKZDK+ztK6Ug+2B6DZx+QtgeyAmo9YThZob8O3xgjqhw2IVQdAITFasl/jqbyDwclMkLXFOZRiytnUrXk/PM6A=="
     crossorigin="anonymous"></script>
-<script async type="text/javascript"
-    src="{{ asset('js/ajax.js') }}?v=<?php echo filectime('js/ajax.js'); ?>"></script>
-<script async type="text/javascript"
-    src="{{ asset('js/theme.js') }}?v=<?php echo filectime('js/theme.js'); ?>"></script>
+<script async type="text/javascript" src="{{ asset('js/common.js') }}?v=<?php echo filectime('js/common.js'); ?>">
+</script>
+<script async type="text/javascript" src="{{ asset('js/theme.js') }}?v=<?php echo filectime('js/theme.js'); ?>">
+</script>
 
 @toastr_js
 @toastr_render
