@@ -117,6 +117,25 @@ function onlyCurrent() { //showing only current TV-programs on clicking by check
     }
 }
 
+function onlyCurrentDark() { //showing only current TV-programs on clicking by checkbox
+    if ($('#onlyCurrent').is(':checked')) {
+        $('.before').hide();
+        $('.after').hide();
+        $('current').after('channel_title');
+        $('.current').css('color', '#fefefe');
+        $('.current a').css('color', '#fefefe');
+        $('.current a').css('font-weight', 'normal');
+        toastr.warning('Режим просмотра текущих телепередач');
+    } else {
+        $('.before').show();
+        $('.after').show();
+        $('.current').css('color', '#fefefe');
+        $('.current a').css('color', '#fefefe');
+        $('.current a').css('font-weight', 'bold');
+        toastr.warning('Режим просмотра всех телепередач');
+    }
+}
+
 function favour(i) { //adding to favour
 
     var getvalue = $(i).attr('id'); //getting channel ID
