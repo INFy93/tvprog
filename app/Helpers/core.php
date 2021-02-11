@@ -20,7 +20,7 @@ class ProgramList
                 break;
 
             default:
-                $limit = 4;
+                $limit = 'limit 4';
         }
 
         $query = DB::select('(select \'previous\' as \'order\', id, ch_id, time, time_to, name, length(descr) as descr_len from epg where ch_id = ' . $id . ' and time < now() and time_to < now() order by time desc limit 2) union (select \'current\' as \'order\', id, ch_id, time, time_to, name, length(descr) as descr_len from epg where ch_id = ' . $id . ' and time <= now() and time_to > now() order by time desc limit 1) union (select \'next\' as \'order\', id, ch_id, time, time_to, name, length(descr) as descr_len from epg where ch_id = ' . $id . ' and time > now() order by time asc ' . $limit . ') order by time');
