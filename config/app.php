@@ -229,7 +229,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Helpers' => App\Helpers\Helpers::class,
-        'ProgrammList' => App\Helpers\ProgrammList::class,
+        'ProgramList' => App\Helpers\ProgramList::class,
         'Tariff' => App\Helpers\Tariff::class,
 
     ],

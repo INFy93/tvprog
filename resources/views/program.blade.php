@@ -11,9 +11,7 @@ $day = date("j", strtotime($time));
 $day_week = date("N", strtotime($time));
 $month_now = date("n", strtotime($time));
 if ($epg) {
-$programBefore = ProgrammList::getBeforeProgramm($epg->ch_id);
-$programCurrent = ProgrammList::getCurrentProgramm($epg->ch_id);
-$programAfter = ProgrammList::getAfterProgramm($epg->ch_id, 0);
+$program = ProgramList::getProgram($epg->ch_id, 0);
 $count = 0;
 }
 @endphp
@@ -23,7 +21,7 @@ $count = 0;
             {{ $channel->name }}</h3>
         <a href="{{ route('home') }}"><button type="submit" class="btn btn-primary">Вернуться к
                 телепрограмме</button></a>
-        @if (!$programBefore || !$programCurrent || !$programAfter)
+        @if (!$program)
         <div class="col-md-12">
             <hr>
             <div class="alert alert-danger message">
@@ -43,45 +41,48 @@ $count = 0;
     </div>
     <div class="col-md-4 program">
 
-        @foreach ($programBefore as $progB)
+        @foreach ($program as $prog)
+        @switch($prog->order)
+        @case('previous')
         <div class="before">
-            <strong>{{ date('H:i', strtotime($progB->time)) }}</strong>
-            @if (strlen($progB->descr) != 0)
-            <a href="#" id="{{ $progB->id }}" class="load_description" data-toggle="modal" data-target="#basicModal"
-                onClick="description(this);">{{ $progB->name }}</a> @else
-            {{ $progB->name }}
+            <strong>{{ date('H:i', strtotime($prog->time)) }}</strong>
+            @if ($prog->descr_len != 0)
+            <a href="#" id="{{ $prog->id }}" class="load_description" data-toggle="modal" data-target="#basicModal"
+                onClick="description(this);">{{ $prog->name }}</a> @else
+            {{ $prog->name }}
             @endif
         </div>
-        @endforeach
-        @if (strlen($programCurrent['epg']) > 0)
+        @break
+        @case('current')
         <div class="current">
-            {{ date('H:i', strtotime($programCurrent['epg']['time'])) }}
-            @if (strlen($programCurrent['epg']['descr']) != 0)
-            <a href="#" id="{{ $programCurrent['epg']->id }}" class="load_description" data-toggle="modal"
-                data-target="#basicModal" onClick="descriptionCurrent(this);">{{ $programCurrent['epg']['name'] }}</a>
-            <div class="progress" style="height: 5px;">
-                <div class="progress-bar" role="progressbar" style="width: {{ $programCurrent['progress'] }}%"
-                    aria-valuenow="{{ $programCurrent['progress'] }}" aria-valuemin="0" aria-valuemax="100">
+            @php $progress = ProgramList::getProgress($prog->time, $prog->time_to); @endphp
+            {{ date('H:i', strtotime($prog->time)) }}
+            @if ($prog->descr_len != 0)
+            <a href="#" id="{{ $prog->id }}" class="load_description" data-toggle="modal" data-target="#basicModal"
+                onClick="descriptionCurrent(this);">{{ $prog->name }}</a>
+            <div class="progress" style="height: 4px;">
+                <div class="progress-bar" role="progressbar" style="width: {{ $progress }}%"
+                    aria-valuenow="{{ $progress }}" aria-valuemin="0" aria-valuemax="100">
                 </div>
             </div>
             @else
-            {{ $programCurrent['epg']['name'] }}
-            <div class="progress" style="height: 5px;">
-                <div class="progress-bar" role="progressbar" style="width: {{ $programCurrent['progress'] }}%"
-                    aria-valuenow="{{ $programCurrent['progress'] }}" aria-valuemin="0" aria-valuemax="100">
+            <a>{{ $prog->name }}</a>
+            <div class="progress" style="height: 4px;">
+                <div class="progress-bar" role="progressbar" style="width: {{ $progress }}%"
+                    aria-valuenow="{{ $progress }}" aria-valuemin="0" aria-valuemax="100">
                 </div>
             </div>
             @endif
         </div>
-        @endif
-        @foreach ($programAfter as $progA)
+        @break
+        @case('next')
         <?php
-                $prog_time = date('d', strtotime($progA->time));
-                $prog_month = date('n', strtotime($progA->time));
+                $prog_time = date('d', strtotime($prog->time));
+                $prog_month = date('n', strtotime($prog->time));
                 if ($now < $prog_time || $month_now < $prog_month) { $now=$prog_time; $month_now=$prog_month;
-                    $day_f=date('j', strtotime($progA->time));
-                    $month_f = date('n', strtotime($progA->time));
-                    $day_week_f = date('N', strtotime($progA->time));
+                    $day_f=date('j', strtotime($prog->time));
+                    $month_f = date('n', strtotime($prog->time));
+                    $day_week_f = date('N', strtotime($prog->time));
                     ?>
     </div>
     <br>
@@ -97,11 +98,11 @@ $count = 0;
             }
             ?>
         <div class="after">
-            <strong>{{ date('H:i', strtotime($progA->time)) }}</strong>
-            @if (strlen($progA->descr) != 0)
-            <a href="#" id="{{ $progA->id }}" class="load_description" data-toggle="modal" data-target="#basicModal"
-                onClick="description(this);">{{ $progA->name }}</a> @else
-            {{ $progA->name }}
+            <strong>{{ date('H:i', strtotime($prog->time)) }}</strong>
+            @if ($prog->descr_len != 0)
+            <a href="#" id="{{ $prog->id }}" class="load_description" data-toggle="modal" data-target="#basicModal"
+                onClick="description(this);">{{ $prog->name }}</a> @else
+            {{ $prog->name }}
             @endif
             <?php $count++; ?>
         </div>
@@ -111,6 +112,7 @@ $count = 0;
     <div class="col-md-4 program">
         <?php $count = 0; ?>
         @endif
+        @endswitch
         @endforeach
     </div>
     @endif

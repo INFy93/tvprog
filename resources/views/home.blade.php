@@ -69,8 +69,7 @@
     @php
     $favour_set = Helpers::getFavourSet($channel->channel_id, $ids)
     @endphp
-    <div
-        class="mix col-md-3 channel_item genreNum{{ $channel->genre_id }} {{ Cookie::get('channel') }} {{ $favour_set['div'] }}">
+    <div class="mix col-md-3 channel_item genreNum{{ $channel->genre_id }} {{ $favour_set['div'] }}">
         <h5 class="channel_title">
             <img class="logo" src="/storage/{{ $channel->logo_path }}"> <a
                 href="{{ route('program', $channel->channel_id) }}">{{ $channel->channel_name }}</a> <a
@@ -83,59 +82,65 @@
                     лого</a>@endif
             </a>
         </h5>
-        @if (!ProgrammList::getBeforeProgramm($channel->channel_id) ||
-        !ProgrammList::getCurrentProgramm($channel->channel_id) || !ProgrammList::getAfterProgramm($channel->channel_id,
-        1))
+        @php
+        $program = ProgramList::getProgram($channel->channel_id, 1);
+        @endphp
+        @if(!$program)
         <div class="alert alert-danger">
             К сожалению, для данного телеканала программа пока недоступна.
         </div>
-
         @else
-        @foreach (ProgrammList::getBeforeProgramm($channel->channel_id) as $progB)
+        @foreach ($program as $prog)
+        @switch($prog->order)
+        @case('previous')
         <div class="before">
-            <strong>{{ date('H:i', strtotime($progB->time)) }}</strong>
-            @if (strlen($progB->descr) != 0)
-            <a href="#" id="{{ $progB->id }}" class="load_description" data-toggle="modal" data-target="#basicModal"
-                onClick="description(this);">{{ $progB->name }}</a> @else
-            {{ $progB->name }}
+            <strong>{{ date('H:i', strtotime($prog->time)) }}</strong>
+            @if ($prog->descr_len != 0)
+            <a href="#" id="{{ $prog->id }}" class="load_description" data-toggle="modal" data-target="#basicModal"
+                onClick="description(this);">{{ $prog->name }}</a> @else
+            {{ $prog->name }}
             @endif
         </div>
-        @endforeach
+        @break
+        @case('current')
         <div class="current">
-            @php
-            $programCurrent = ProgrammList::getCurrentProgramm($channel->channel_id);
-            @endphp
-            {{ date('H:i', strtotime($programCurrent['epg']['time'])) }}
-            @if (strlen($programCurrent['epg']['descr']) != 0)
-            <a href="#" id="{{ $programCurrent['epg']->id }}" class="load_description" data-toggle="modal"
-                data-target="#basicModal" onClick="descriptionCurrent(this);">{{ $programCurrent['epg']['name'] }}</a>
+            @php $progress = ProgramList::getProgress($prog->time, $prog->time_to); @endphp
+            {{ date('H:i', strtotime($prog->time)) }}
+            @if ($prog->descr_len != 0)
+            <a href="#" id="{{ $prog->id }}" class="load_description" data-toggle="modal" data-target="#basicModal"
+                onClick="descriptionCurrent(this);">{{ $prog->name }}</a>
             <div class="progress" style="height: 4px;">
-                <div class="progress-bar" role="progressbar" style="width: {{ $programCurrent['progress'] }}%"
-                    aria-valuenow="{{ $programCurrent['progress'] }}" aria-valuemin="0" aria-valuemax="100">
+                <div class="progress-bar" role="progressbar" style="width: {{ $progress }}%"
+                    aria-valuenow="{{ $progress }}" aria-valuemin="0" aria-valuemax="100">
                 </div>
             </div>
             @else
-            <a>{{ $programCurrent['epg']['name'] }}</a>
+            <a>{{ $prog->name }}</a>
             <div class="progress" style="height: 4px;">
-                <div class="progress-bar" role="progressbar" style="width: {{ $programCurrent['progress'] }}%"
-                    aria-valuenow="{{ $programCurrent['progress'] }}" aria-valuemin="0" aria-valuemax="100">
+                <div class="progress-bar" role="progressbar" style="width: {{ $progress }}%"
+                    aria-valuenow="{{ $progress }}" aria-valuemin="0" aria-valuemax="100">
                 </div>
             </div>
             @endif
         </div>
-        @foreach (ProgrammList::getAfterProgramm($channel->channel_id, 1) as $progA)
+        @break
+        @case('next')
         <div class="after">
-            <strong>{{ date('H:i', strtotime($progA->time)) }}</strong>
-            @if (strlen($progA->descr) != 0)
-            <a href="#" id="{{ $progA->id }}" class="load_description" data-toggle="modal" data-target="#basicModal"
-                onClick="description(this);">{{ $progA->name }}</a> @else
-            {{ $progA->name }}
+            <strong>{{ date('H:i', strtotime($prog->time)) }}</strong>
+            @if ($prog->descr_len != 0)
+            <a href="#" id="{{ $prog->id }}" class="load_description" data-toggle="modal" data-target="#basicModal"
+                onClick="description(this);">{{ $prog->name }}</a> @else
+            {{ $prog->name }}
             @endif
         </div>
+        @break
+        @endswitch
         @endforeach
         @endif
+
     </div>
     @endforeach
+
 </div>
 <!-- окошко для вывода описания/уведомлений -->
 <div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">

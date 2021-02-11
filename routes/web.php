@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ItvController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -58,6 +59,11 @@ Route::get(
     '/theme/{theme}',
     'ThemeController@getTheme'
 )->name('theme-switcher'); //сохранение выбранной темы в сессии, чтобы выбор не слетал после перезагрузки страницы
+
+Route::get(
+    '/test',
+    'ItvController@test'
+)->name('test');
 
 
 // админская часть
