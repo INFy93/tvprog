@@ -26,6 +26,7 @@ class EpgController extends Controller
         $descr = Epg::select('time', 'time_to', 'name', 'descr')
             ->where('id', '=', $id)
             ->first();
+
         return $descr->toJson();
     }
 

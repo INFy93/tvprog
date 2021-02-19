@@ -230,7 +230,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Helpers' => App\Helpers\Helpers::class,
         'ProgramList' => App\Helpers\ProgramList::class,
-        'Tariff' => App\Helpers\Tariff::class,
+        'Tariffs' => App\Helpers\Tariffs::class,
 
     ],
 

@@ -26,4 +26,14 @@ class ItvController extends Controller
 
         return view('home', ['channels' => $itv, 'genres' => $genres]);
     }
+
+    public function test()
+    {
+        $itv = Itv::
+        select('id', 'name', 'tv_genre_id')
+        ->orderBy('number', 'asc')
+        ->get();
+
+        return view('test', ['channels' => $itv]);
+    }
 }

@@ -13,7 +13,14 @@
         @include('inc.messages')
         <!-- Основной контент страницы  -->
         @yield('content')
-
+        @php
+        $time_end = microtime(true);
+        $time = $time_end - LARAVEL_START;
+        if (Auth::check())
+        {
+        printf('Скрипт выполнялся %.4F сек.', $time);
+        }
+        @endphp
     </div>
 </body>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"

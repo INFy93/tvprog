@@ -21,7 +21,7 @@ $count = 0;
             {{ $channel->name }}</h3>
         <a href="{{ route('home') }}"><button type="submit" class="btn btn-primary">Вернуться к
                 телепрограмме</button></a>
-        @if (!$program)
+        @if (sizeof($program) == 2)
         <div class="col-md-12">
             <hr>
             <div class="alert alert-danger message">

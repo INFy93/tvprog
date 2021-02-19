@@ -12,12 +12,12 @@
         <div class="list_object">
             @if($rows['caregory_channels'] == $channel->category)
             <div class="channel-row-diff">
-                <img class="logos_list" src="{{ asset('storage/'.$channel->logo_path) }}"> {{ $channel->channel_name }}
+                <img class="logos_list" src="{{ asset('storage/'.$channel->logo) }}"> {{ $channel->name }}
                 <br>
             </div>
             @else
             <div class="channel-row">
-                <img class="logos_list" src="{{ asset('storage/'.$channel->logo_path) }}"> {{ $channel->channel_name }}
+                <img class="logos_list" src="{{ asset('storage/'.$channel->logo) }}"> {{ $channel->name }}
                 <br>
             </div>
 

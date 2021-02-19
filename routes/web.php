@@ -112,14 +112,24 @@ Route::middleware('auth')->group(function () {
     )->name('logout'); //разлогин
 
     Route::get(
-        '/dashboard/cache/',
+        '/dashboard/artisan/',
         'ClearController@index'
     )->name('cache'); //страница очистки кеша
 
     Route::get(
-        '/dashboard/clear-cache/{action}',
+        '/dashboard/artisan/{action}',
         'ClearController@clearCaches'
     )->name('clear-caches'); //функция очистки кеша
+
+    Route::get(
+        'dashboard/cache-table',
+        'CacheController@index'
+    )->name('cache-table'); //управление табличкой кеша
+
+    Route::get(
+        'dashboard/cache-table/update',
+        'CacheController@updateCacheTable'
+    )->name('update-cache-table'); //обновление таблицы с кешем
 
     Route::get('/storage-link', function () {
         $command = 'storage:link';

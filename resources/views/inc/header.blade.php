@@ -6,7 +6,8 @@
     <nav class="my-2 my-md-0 mr-md-3">
         <a class="p-2 text-dark" href="{{ route('admin-home') }}">Список каналов</a>
         <a class="p-2 text-dark" href="{{ route('logo_show') }}">Работа с логотипами</a>
-        <a class="p-2 text-dark" href="{{ route('cache') }}">Очистка кеша</a>
+        <a class="p-2 text-dark" href="{{ route('cache') }}">Команды Artisan</a>
+        <a class="p-2 text-dark" href="{{ route('cache-table') }}">Кеширующая таблица</a>
     </nav>
     <a class="btn btn-outline-primary" href="{{ route('logout') }}">Выход</a>
 

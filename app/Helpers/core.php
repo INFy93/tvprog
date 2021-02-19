@@ -6,6 +6,7 @@ use DB;
 use App\Models\Epg;
 use App\Models\Itv;
 use App\Models\Logos;
+use Illuminate\Support\Facades\Http;
 
 class ProgramList
 {
@@ -20,7 +21,7 @@ class ProgramList
                 break;
 
             default:
-                $limit = 'limit 4';
+                $limit = 4;
         }
 
         $query = DB::select('(select \'previous\' as \'order\', id, ch_id, time, time_to, name, length(descr) as descr_len from epg where ch_id = ' . $id . ' and time < now() and time_to < now() order by time desc limit 2) union (select \'current\' as \'order\', id, ch_id, time, time_to, name, length(descr) as descr_len from epg where ch_id = ' . $id . ' and time <= now() and time_to > now() order by time desc limit 1) union (select \'next\' as \'order\', id, ch_id, time, time_to, name, length(descr) as descr_len from epg where ch_id = ' . $id . ' and time > now() order by time asc ' . $limit . ') order by time');
@@ -122,10 +123,42 @@ class Helpers
     }
 }
 
-class Tariff
+class Tariffs
 {
     public static function zeroFill($tech_id)
     {
         return str_pad($tech_id, 3, "0", STR_PAD_LEFT);
+    }
+
+    public static function getActualChannels()
+    {
+        $array_with_tariffs = json_decode(Http::get(env('CHANNEL_LIST_URL', 0)), true); //получаем и декодируем массив из json
+        if ($array_with_tariffs) {
+            $channel_list = array(); //массив для результата
+            $j = 0; //счетчик
+                foreach ($array_with_tariffs as $key => $value) //перебор массива + запрос
+                {
+                    if ($value != 0)
+                    {
+                        $channel_data = Itv::leftJoin('logos', function ($join) {
+                            $join->on('logos.ch_id', '=', 'itv.id');
+                        })
+                            ->where('itv.cmd', 'like', '%channel-' . self::zeroFill($key) . '%')
+                            ->select('itv.name AS channel_name', 'itv.number as number', DB::raw('IFNULL(logos.path, "images/no_logo.png") as logo_path'))
+                            ->orderBy('itv.number', 'asc')
+                            ->first();
+
+                        $channel_list[$j] = $channel_data;
+                        $channel_list[$j]['category'] = $value;
+
+                        $j++;
+                    }
+
+                }
+                return collect($channel_list)->toJson();
+
+        } else {
+            return 'Ошибка получения актуальных каналов!';
+        }
     }
 }

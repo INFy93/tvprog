@@ -44,7 +44,6 @@ session(['theme' => 'app']);
             if (Auth::check())
             {
             printf('Скрипт выполнялся %.4F сек.', $time);
-            dump($time);
             }
             @endphp
 </body>

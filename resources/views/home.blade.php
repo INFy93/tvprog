@@ -85,7 +85,7 @@
         @php
         $program = ProgramList::getProgram($channel->channel_id, 1);
         @endphp
-        @if(!$program)
+        @if(sizeof($program) == 2)
         <div class="alert alert-danger">
             К сожалению, для данного телеканала программа пока недоступна.
         </div>

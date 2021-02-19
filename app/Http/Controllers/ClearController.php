@@ -30,6 +30,9 @@ class ClearController extends Controller
             case 'view':
                 Artisan::call('view:clear'); //кеш вьюшек
                 break;
+                case 'migrate':
+                    Artisan::call('migrate'); //миграции
+                    break;
 
             default:
                 Artisan::call('cache:clear'); //по дефолту чистим общий кеш
