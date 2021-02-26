@@ -10,13 +10,14 @@ class CacheController extends Controller
 {
     public function index()
     {
-        $cache_count = CachedChannels::count();
-        $orig_count = Itv::count();
+        $cache_count = CachedChannels::count(); //количество записей в кеширующей таблице
+        $orig_count = Itv::count(); //количество записей в оригинальной таблице
 
-        $orig = Itv::select('name', 'number')->get();
-        $diff = $orig->diff(CachedChannels::select('name', 'number')->get());
+        $orig = Itv::select('name', 'number')->get()->toArray();
+        $cached = CachedChannels::select('name', 'number')->get()->toArray(); //получаем данные из двух таблиц в виде массива, а не коллекцию
+        $diff = array_diff(array_map('serialize', $cached), array_map('serialize', $orig)); //сравниваем, используя сериализацию, т.к. массив многомерный
 
-        if (sizeof($diff) == 0) {
+        if (sizeof($diff) == 0) { //проверяем наличие элементов в переменной-"разнице", формируем цвета и вывод
             $msg = 'Да';
             $color = 'green';
         } else {
@@ -24,7 +25,7 @@ class CacheController extends Controller
             $color = 'red';
         }
 
-        $info = [
+        $info = [ //массив с нужными данными для отображения состояния кеширующей таблицы
             'cache_count' => $cache_count,
             'orig_count' => $orig_count,
             'diff' => $msg,
