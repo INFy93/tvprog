@@ -72,24 +72,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', 'ItvController@getChannelData')->name('admin-home'); // главная стр админки
 
     Route::get(
-        '/dashboard/logo/add/{id}/upload',
-        'LogoController@oneLogoToChange'
-    )->name('logo_add'); // добавляем логотип. вьюшка
-
-    Route::post(
-        '/dashboard/logo/add/{id}/upload',
-        'LogoController@oneLogoToChange'
-    )->name('logo_add'); // добавляем логотип. роут для добавления
-
-    Route::get(
         '/dashboard/logos/all/{id}',
         'LogoController@oneLogoToEdit'
-    )->name('logo_data'); // меняем логотип. вьюшка
-
-    Route::get(
-        '/dashboard/logos/all/{id}/update',
-        'LogoController@updateLogo'
-    )->name('logo_update'); // ф-ция обновления логотипа
+    )->name('logo_data'); //отображение страницы: работа с логотипом
 
     Route::post(
         '/dashboard/logos/all/{id}/update',
@@ -100,11 +85,6 @@ Route::middleware('auth')->group(function () {
         '/dashboard/logos/all',
         'LogoController@allLogos'
     )->name('logo_show'); // показываем ВСЕ логотипы
-
-    Route::post(
-        '/dashboard/logo/{id}/submit',
-        'LogoController@submit'
-    )->name('logo_upload'); // загружаем логотип
 
     Route::get(
         '/dashboard/logout',

@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="col-12">
-    <h1>Обновление логотипа</h1>
+    <h1>Добавить или изменить логотип</h1>
 </div>
 <div class="col-12">
     Телеканал: <strong>{{ $logo_single->channel_name }}</strong>
@@ -16,7 +16,7 @@
                 <strong>svg</strong> или <strong>bmp</strong>):</label>
             <input type="file" name="logo" id="logo" class="form-control-file" onchange="ValidateSingleInput(this);">
         </div>
-        <button type="submit" class="btn btn-primary">Обновить логотип</button>
+        <button type="submit" class="btn btn-primary">Изменить логотип</button>
 
     </form>
     <br>
