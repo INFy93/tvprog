@@ -67,6 +67,8 @@ class LogoController extends Controller
                 $logo->save();
 
                 return redirect()->route('logo_show')->with('success', 'Логотип успешно добавлен');
+            } else {
+                return redirect()->route('logo_show')->with('error', 'Ошибка обновления логотипа: файл не найден. Забыли выбрать файл?');
             }
 
         }
