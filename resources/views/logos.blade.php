@@ -40,14 +40,9 @@
                 <center><img class="logo" src="{{ asset('/storage/' . $logo->logo_path) }}" alt=""></center>
             </th>
             <th>
-                @if($logo->logo_path == 'images/no_logo.png')
-                <center><a href="{{ route('logo_add', $logo->channel_id) }}"><button type="submit"
-                            class="btn btn-primary">Добавить логотип</button></a></center>
-            </th>
-            @else
-            <center><a href="{{ route('logo_data', $logo->channel_id) }}"><button type="submit"
+                <center><a href="{{ route('logo_data', $logo->channel_id) }}"><button type="submit"
                         class="btn btn-success">Изменить логотип</button></a></center>
-            </th>@endif
+            </th>
         </tr>
         @endforeach
     </tbody>

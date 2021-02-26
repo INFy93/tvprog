@@ -18,7 +18,7 @@ toastr.options = { //setting up popup
 
 function clearCache(i) {
     let action = $(i).attr('id');
-    let route = '/dashboard/clear-cache/' + action;
+    let route = '/dashboard/artisan/' + action;
 
     $.ajax({
         type: 'GET',
