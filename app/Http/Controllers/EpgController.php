@@ -16,8 +16,14 @@ class EpgController extends Controller
     {
         $epg = Epg::where('ch_id', '=', $id)->first();
         $channel = Itv::where('id', '=', $id)->first();
-        $logo = Logos::where('ch_id', '=', $id)
-            ->first();
+       $logo = Logos::where('ch_id', '=', $id)
+       ->first();
+      if(!$logo)
+      {
+          $logo = array();
+          $logo = collect($logo);
+          $logo->path = 'images/no_logo.png';
+      }
         return view('program', ['epg' => $epg, 'channel' => $channel, 'logo' => $logo]);
     }
 
