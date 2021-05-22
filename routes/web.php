@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ItvController;
+use App\Http\Controllers\ViewsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -65,6 +66,10 @@ Route::get(
     'ItvController@test'
 )->name('test');
 
+Route::get('/rank',
+    'ViewsController@index'
+    )->name('rank');
+
 
 // админская часть
 Auth::routes();
@@ -110,6 +115,16 @@ Route::middleware('auth')->group(function () {
         'dashboard/cache-table/update',
         'CacheController@updateCacheTable'
     )->name('update-cache-table'); //обновление таблицы с кешем
+
+    Route::get(
+        'dashboard/settings',
+        'EnvController@index'
+    )->name('settings'); //обновление таблицы с кешем
+
+    Route::post(
+        'dashboard/settings/apply',
+        'EnvController@changeSettings'
+    )->name('env-change'); //обновление таблицы с кешем
 
     Route::get('/storage-link', function () {
         $command = 'storage:link';

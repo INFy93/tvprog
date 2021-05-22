@@ -26,6 +26,9 @@
             </li>
             <hr>
             <li class="nav-item">
+                <a class="nav-link" href="{{route('rank')}}">Рейтинг</a>
+            </li>
+            <li class="nav-item">
                 @if(session('theme') == 'dark')
                 <button type="button" class="btn btn-secondary" id="theme-button">Светлая тема</button>
                 @else

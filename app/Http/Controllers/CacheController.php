@@ -45,11 +45,14 @@ class CacheController extends Controller
         $query_array = array();
 
         while ($i < count($channels)) //готовим массив для заполнения кеширующей таблицы
-        {
+        {   $tech_num = substr($channels[$i]->cmd, -14, 3);
             $query_array[] = array(
+
+                'ch_id' => $channels[$i]->ch_id,
                 'number' => $channels[$i]->number,
                 'name' => $channels[$i]->channel_name,
                 'category' => $channels[$i]->category,
+                'cmd' => $tech_num,
                 'logo' => $channels[$i]->logo_path
             );
 

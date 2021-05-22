@@ -176,3 +176,13 @@ footer {
 .message {
   text-align: center;
 }
+.decription {
+    padding-top: 10px;
+    text-align: justify;
+}
+.program_name {
+    font-size: 18px;
+}
+.rank_category, .popular {
+    margin-top: 15px;
+}

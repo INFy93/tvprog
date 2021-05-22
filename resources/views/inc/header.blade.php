@@ -8,6 +8,7 @@
         <a class="p-2 text-dark" href="{{ route('logo_show') }}">Работа с логотипами</a>
         <a class="p-2 text-dark" href="{{ route('cache') }}">Команды Artisan</a>
         <a class="p-2 text-dark" href="{{ route('cache-table') }}">Кеширующая таблица</a>
+        <a class="p-2 text-dark" href="{{ route('settings') }}">Настройки</a>
     </nav>
     <a class="btn btn-outline-primary" href="{{ route('logout') }}">Выход</a>
 

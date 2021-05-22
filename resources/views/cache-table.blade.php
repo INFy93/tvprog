@@ -25,12 +25,11 @@
                 <td>{{ $info['cache_count'] }}</td>
             </tr>
             <tr>
-                <td>Совпадают ли данные? </td>
-                <td><span style="color: {{ $info['color'] }}">{{ $info['diff'] }}</span></td>
+               <td>Совпадают ли данные? </td>
+               <td><span style="color: {{ $info['color'] }}">{{ $info['diff'] }}</span></td>
             </tr>
             <tr>
-                <td rowspan="2"><a class="btn btn-danger" href="{{ route('update-cache-table') }}"
-                        role="button">Обновить кеширующую таблицу</a></td>
+                <td rowspan="2"><a class="btn btn-danger" href="{{ route('update-cache-table') }}" role="button">Обновить кеширующую таблицу</a></td>
             </tr>
         </tbody>
     </table>

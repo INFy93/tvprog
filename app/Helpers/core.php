@@ -37,6 +37,19 @@ class ProgramList
 
         return $progress;
     }
+
+    public static function getCurrentProgram($ch_id)
+    {
+        $time = date("Y-m-d H:i:s");
+        $program = Epg::where([
+                ['ch_id', '=', $ch_id],
+                ['time', '<=', $time],
+                ['time_to', '>', $time]
+            ])
+            ->first();
+
+        return $program;
+    }
 }
 
 class Helpers
@@ -121,6 +134,15 @@ class Helpers
 
         return $path;
     }
+
+    public static function cutString($string)
+    {
+        if (strlen($string) <= 180)
+            return $string;
+
+        $temp = substr($string, 0, 180);
+        return substr($temp, 0, strrpos($temp, ' ')) . '...';
+    }
 }
 
 class Tariffs
@@ -136,27 +158,24 @@ class Tariffs
         if ($array_with_tariffs) {
             $channel_list = array(); //массив для результата
             $j = 0; //счетчик
-                foreach ($array_with_tariffs as $key => $value) //перебор массива + запрос
-                {
-                    if ($value != 0)
-                    {
-                        $channel_data = Itv::leftJoin('logos', function ($join) {
-                            $join->on('logos.ch_id', '=', 'itv.id');
-                        })
-                            ->where('itv.cmd', 'like', '%channel-' . self::zeroFill($key) . '%')
-                            ->select('itv.name AS channel_name', 'itv.number as number', DB::raw('IFNULL(logos.path, "images/no_logo.png") as logo_path'))
-                            ->orderBy('itv.number', 'asc')
-                            ->first();
+            foreach ($array_with_tariffs as $key => $value) //перебор массива + запрос
+            {
+                if ($value != 0) {
+                    $channel_data = Itv::leftJoin('logos', function ($join) {
+                        $join->on('logos.ch_id', '=', 'itv.id');
+                    })
+                        ->where('itv.cmd', 'like', '%channel-' . self::zeroFill($key) . '%')
+                        ->select('itv.id as ch_id', 'itv.name AS channel_name', 'itv.number as number', 'itv.cmd as cmd', DB::raw('IFNULL(logos.path, "images/no_logo.png") as logo_path'))
+                        ->orderBy('itv.number', 'asc')
+                        ->first();
 
-                        $channel_list[$j] = $channel_data;
-                        $channel_list[$j]['category'] = $value;
+                    $channel_list[$j] = $channel_data;
+                    $channel_list[$j]['category'] = $value;
 
-                        $j++;
-                    }
-
+                    $j++;
                 }
-                return collect($channel_list)->toJson();
-
+            }
+            return collect($channel_list)->toJson();
         } else {
             return 'Ошибка получения актуальных каналов!';
         }

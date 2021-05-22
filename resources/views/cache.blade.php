@@ -19,28 +19,23 @@
             <tbody>
                 <tr>
                     <td>php artisan cache:clear</td>
-                    <td><a class="btn btn-primary" href="#" id="cache" role="button"
-                            onClick="clearCache(this);">Глобальный кеш</a></td>
+                    <td><a class="btn btn-primary" href="#" id="cache" role="button" onClick="clearCache(this);">Глобальный кеш</a></td>
                 </tr>
                 <tr>
                     <td>php artisan config:clear</td>
-                    <td><a class="btn btn-primary" href="#" id="config" role="button" onClick="clearCache(this);">Кеш
-                            конфига</a></td>
+                    <td><a class="btn btn-primary" href="#" id="config" role="button" onClick="clearCache(this);">Кеш конфига</a></td>
                 </tr>
                 <tr>
                     <td>php artisan route:clear</td>
-                    <td><a class="btn btn-primary" href="#" id="route" role="button" onClick="clearCache(this);">Кеш
-                            роутов</a></td>
+                    <td><a class="btn btn-primary" href="#" id="route" role="button" onClick="clearCache(this);">Кеш роутов</a></td>
                 </tr>
                 <tr>
                     <td>php artisan view:clear</td>
-                    <td><a class="btn btn-primary" href="#" id="view" role="button" onClick="clearCache(this);">Кеш
-                            вьюшек</a></td>
+                    <td><a class="btn btn-primary" href="#" id="view" role="button" onClick="clearCache(this);">Кеш вьюшек</a></td>
                 </tr>
                 <tr>
                     <td>php artisan migrate</td>
-                    <td><a class="btn btn-primary" href="#" id="migrate" role="button"
-                            onClick="clearCache(this);">Сделать миграцию</a></td>
+                    <td><a class="btn btn-primary" href="#" id="migrate" role="button" onClick="clearCache(this);">Сделать миграцию</a></td>
                 </tr>
             </tbody>
         </table>
