@@ -47,8 +47,7 @@ $count = 0;
         <div class="before">
             <strong>{{ date('H:i', strtotime($prog->time)) }}</strong>
             @if ($prog->descr_len != 0)
-            <a href="#" id="{{ $prog->id }}" class="load_description" data-toggle="modal" data-target="#basicModal"
-                onClick="description(this);">{{ $prog->name }}</a> @else
+            <a href="#" id="{{ $prog->id }}" class="description_before" data-toggle="modal" data-target="#basicModal">{{ $prog->name }}</a> @else
             {{ $prog->name }}
             @endif
         </div>
@@ -58,8 +57,7 @@ $count = 0;
             @php $progress = ProgramList::getProgress($prog->time, $prog->time_to); @endphp
             {{ date('H:i', strtotime($prog->time)) }}
             @if ($prog->descr_len != 0)
-            <a href="#" id="{{ $prog->id }}" class="load_description" data-toggle="modal" data-target="#basicModal"
-                onClick="descriptionCurrent(this);">{{ $prog->name }}</a>
+            <a href="#" id="{{ $prog->id }}" class="current_link" data-toggle="modal" data-target="#basicModal">{{ $prog->name }}</a>
             <div class="progress" style="height: 4px;">
                 <div class="progress-bar" role="progressbar" style="width: {{ $progress }}%"
                     aria-valuenow="{{ $progress }}" aria-valuemin="0" aria-valuemax="100">
@@ -100,8 +98,7 @@ $count = 0;
         <div class="after">
             <strong>{{ date('H:i', strtotime($prog->time)) }}</strong>
             @if ($prog->descr_len != 0)
-            <a href="#" id="{{ $prog->id }}" class="load_description" data-toggle="modal" data-target="#basicModal"
-                onClick="description(this);">{{ $prog->name }}</a> @else
+            <a href="#" id="{{ $prog->id }}" class="description_after" data-toggle="modal" data-target="#basicModal">{{ $prog->name }}</a> @else
             {{ $prog->name }}
             @endif
             <?php $count++; ?>

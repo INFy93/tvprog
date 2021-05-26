@@ -39,9 +39,10 @@ $(document).ready(function () { //setting up mixit
 
 });
 
-function description(i) { //showing description of TV-program
-    var d_id = $(i).attr('id'); //takin' TV-program ID
-    var route = '/descr/' + d_id; //preparing route
+$('.description_before, .description_after').on('click', description);
+function description() { //showing description of TV-program
+    let d_id = $(this).attr('id'); //takin' TV-program ID
+    let route = '/descr/' + d_id; //preparing route
     $.ajax({
         type: 'GET',
         url: route,
@@ -56,11 +57,11 @@ function description(i) { //showing description of TV-program
         }
     });
 }
-
-function descriptionCurrent(i) { //showing description of TV-program
-    var d_id = $(i).attr('id'); //takin' TV-program ID
-    var route = '/descr/current/' + d_id; //preparing route
-    var timestamp = new Date().getTime();
+$('.current_link, .rank_link, .read_more').on('click', descriptionCurrent);
+function descriptionCurrent() { //showing description of TV-program
+    let d_id = $(this).attr('id'); //takin' TV-program ID
+  let route = '/descr/current/' + d_id; //preparing route
+    let timestamp = new Date().getTime();
     $.ajax({
         type: 'GET',
         url: route,

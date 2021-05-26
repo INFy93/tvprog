@@ -43,9 +43,8 @@ $(document).ready(function () { //setting up mixit
         "showMethod": "fadeIn",
         "hideMethod": "fadeOut"
     }
-    $('[data-toggle="tooltip"]').tooltip(); //enable tooltip
 
-    var btn = $('#button'); //"Up" button settings
+    let btn = $('#button'); //"Up" button settings
     $(window).scroll(function () {
         if ($(window).scrollTop() > 300) {
             btn.addClass('show');
@@ -57,12 +56,14 @@ $(document).ready(function () { //setting up mixit
         e.preventDefault();
         $('html, body').animate({ scrollTop: 0 }, '300');
     });
-
+    $('[data-toggle="tooltip"]').tooltip({
+        trigger: 'hover'
+      });
 });
-
-function description(i) { //showing description of TV-program
-    var d_id = $(i).attr('id'); //takin' TV-program ID
-    var route = '/descr/' + d_id; //preparing route
+$('.description_before, .description_after').on('click', description);
+function description() { //showing description of TV-program
+    let d_id = $(this).attr('id'); //takin' TV-program ID
+    let route = '/descr/' + d_id; //preparing route
     $.ajax({
         type: 'GET',
         url: route,
@@ -77,11 +78,11 @@ function description(i) { //showing description of TV-program
         }
     });
 }
-
-function descriptionCurrent(i) { //showing description of TV-program
-    var d_id = $(i).attr('id'); //takin' TV-program ID
-    var route = '/descr/current/' + d_id; //preparing route
-    var timestamp = new Date().getTime();
+$('.current_link, .rank_link, .read_more').on('click', descriptionCurrent);
+function descriptionCurrent() { //showing description of TV-program
+    let d_id = $(this).attr('id'); //takin' TV-program ID
+  let route = '/descr/current/' + d_id; //preparing route
+    let timestamp = new Date().getTime();
     $.ajax({
         type: 'GET',
         url: route,
@@ -97,52 +98,74 @@ function descriptionCurrent(i) { //showing description of TV-program
     });
 }
 
+$(document.body).on('click', '.favour_switch', favourSwitch);
+function favourSwitch()
+{
+  //$(this).parent().attr('data-filter')
+  if($(this).attr('data-prefix') == 'far')
+  {
+      $(this).attr('data-prefix', 'fas');
+      $(this).parent().attr('data-filter', '.all');
+      $(this).parent().attr('data-original-title', 'Все телеканалы').tooltip('show');
+  } else if ($(this).attr('data-prefix') == 'fas')
+  {
+    $(this).attr('data-prefix', 'far');
+    $(this).parent().attr('data-filter', '.favour');
+    $(this).parent().attr('data-original-title', 'Избранное').tooltip('show');
+    $('#all')[0].click();
+  }
+}
 
+$(document.body).on('click', '.switch', onlyCurrent);
 function onlyCurrent() { //showing only current TV-programs on clicking by checkbox
-    if ($('#onlyCurrent').is(':checked')) {
+    if ($(this).attr('data-prefix') == 'fas') {
+        $(this).attr('data-prefix', 'fad');
+        $(this).parent().attr('data-original-title', 'Все передачи').tooltip('show');
         $('.before').hide();
         $('.after').hide();
         $('current').after('channel_title');
         $('.current').css('color', 'black');
         $('.current a').css('color', 'black');
         $('.current a').css('font-weight', 'normal');
-        toastr.warning('Режим просмотра текущих телепередач');
-    } else {
+    } else if ($(this).attr('data-prefix') == 'fad') {
+        $(this).attr('data-prefix', 'fas');
+        $(this).parent().attr('data-original-title', 'Текущие передачи').tooltip('show');
         $('.before').show();
         $('.after').show();
         $('.current').css('color', '#0066ff');
         $('.current a').css('color', '#0066ff');
         $('.current a').css('font-weight', 'bold');
-        toastr.warning('Режим просмотра всех телепередач');
     }
 }
-
+$(document.body).on('click', '.switch_dark', onlyCurrentDark);
 function onlyCurrentDark() { //showing only current TV-programs on clicking by checkbox
-    if ($('#onlyCurrent').is(':checked')) {
+    if ($(this).attr('data-prefix') == 'fas') {
+        $(this).attr('data-prefix', 'fad');
+        $(this).parent().attr('data-original-title', 'Все передачи').tooltip('show');
         $('.before').hide();
         $('.after').hide();
         $('current').after('channel_title');
         $('.current').css('color', '#fefefe');
         $('.current a').css('color', '#fefefe');
         $('.current a').css('font-weight', 'normal');
-        toastr.warning('Режим просмотра текущих телепередач');
-    } else {
+    } else if ($(this).attr('data-prefix') == 'fad') {
+        $(this).attr('data-prefix', 'fas');
+        $(this).parent().attr('data-original-title', 'Текущие передачи').tooltip('show');
         $('.before').show();
         $('.after').show();
         $('.current').css('color', '#fefefe');
         $('.current a').css('color', '#fefefe');
         $('.current a').css('font-weight', 'bold');
-        toastr.warning('Режим просмотра всех телепередач');
     }
 }
+$('.favour_link').on('click', favour)
+function favour() { //adding to favour
 
-function favour(i) { //adding to favour
+    let getvalue = $(this).attr('id'); //getting channel ID
+    let name = $(this).attr('name'); //channel name for popup
+    let div = $("#" + getvalue).parents('.mix')[0]; //getting name of 'channel'-div
 
-    var getvalue = $(i).attr('id'); //getting channel ID
-    var name = $(i).attr('name'); //channel name for popup
-    var div = $("#" + getvalue).parents('.mix')[0]; //getting name of 'channel'-div
-
-    if ($(i).hasClass('add_favour')) {//if channel isn't in favour list
+    if ($(this).hasClass('add_favour')) {//if channel isn't in favour list
         $.ajax({
             type: "GET", //data type
             url: "/cookie/set/" + getvalue, //route for cookie controller
@@ -157,7 +180,7 @@ function favour(i) { //adding to favour
             toastr.error('Произошла ошибка, попробуйте позже.') //popup error
         });
     }
-    else if ($(i).hasClass('delete_favour')) { //if channel is in favour list
+    else if ($(this).hasClass('delete_favour')) { //if channel is in favour list
         $.ajax({
             type: "GET", //data type
             url: "/cookie/delete/" + getvalue, //route for deleting channel from cookie

@@ -4,7 +4,7 @@
 
 @section('categories')
 <nav class="navbar navbar-expand-md navbar-light">
-    <a class="navbar-brand" href="#">Категории</a>
+    <a class="navbar-brand" href="#">Телепрограмма</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -12,34 +12,40 @@
     <div class="collapse navbar-collapse" id="navbar">
         <!-- Пункты меню с категориями -->
         <ul class="navbar-nav" id="sort">
-            <hr>
-            <li class="nav-item">
-                @if(session('theme') == 'dark')
-                <input type="checkbox" class="form-check-input" id="onlyCurrent" onClick="onlyCurrentDark(this);">
-                @else
-                <input type="checkbox" class="form-check-input" id="onlyCurrent" onClick="onlyCurrent(this);">
+
+            <div class="controls">
+                <div class="control_item">
+                    <a id="fav" class="hidden-xs" data-toggle="tooltip" data-placement="bottom"
+                    title="Избранное" data-mixitup-control data-filter=".favour"><i class="favour_switch far fa-star"></i></a>
+                </div>
+                <div class="control_item">
+                    @if(session('theme') == 'dark')
+                    <a data-toggle="tooltip" data-placement="bottom"
+                    title="Текущие передачи"><i class="switch_dark fas fa-tv" id="onlyCurrent"></i></a>
+                    @else
+                    <a data-toggle="tooltip" data-placement="bottom"
+                    title="Текущие передачи"><i class="switch fas fa-tv" id="onlyCurrent"></i></a>
+                    @endif
+                </div>
+                <div class="control_item">
+                    @if(session('theme') == 'dark')
+                    <a  data-toggle="tooltip" data-placement="bottom"
+                    title="Светлая тема"><i class="fas fa-sun" id="theme-button"></i></a>
+
+                    @else
+                    <a  data-toggle="tooltip" data-placement="bottom"
+                    title="Темная тема"><i class="fas fa-moon" id="theme-button"></i></a>
                 @endif
-                <label class="form-check-label sort-label" for="onlyCurrent">Сейчас в эфире <a href="#"
-                        data-toggle="tooltip" data-placement="bottom"
-                        title="Если галочка отмечена, то показываются только те передачи, которые идут в данный момент."><i
-                            class='fas fa-question-circle' style='font-size:16px'></i></a> </label>
-            </li>
-            <hr>
+                </div>
+                <div class="control_item">
+                    <a data-toggle="modal" data-target="#faq"><i class="far fa-question-circle"></i></a>
+                </div>
+
+            </div>
             <li class="nav-item">
-                <a class="nav-link" href="{{route('rank')}}">Рейтинг</a>
+            <a class="nav-link"  style='float: left;'  data-toggle="tooltip" data-placement="bottom"
+            title="Передачи, которые смотрят зрители в данный момент." href="{{route('rank')}}">Популярное сейчас</a>
             </li>
-            <li class="nav-item">
-                @if(session('theme') == 'dark')
-                <button type="button" class="btn btn-secondary" id="theme-button">Светлая тема</button>
-                @else
-                <button type="button" class="btn btn-dark" id="theme-button">Темная тема</button>
-                @endif
-                <a href="#" data-toggle="tooltip" data-placement="bottom"
-                    title="Применяет темную или светлую тему для общей программы и программы конкретного канала. По умолчанию - светлая тема."><i
-                        class='fas fa-question-circle'
-                        style='font-size:24px; vertical-align: middle; paddnig-right: 5px;'></i></a> </label>
-            </li>
-            <hr>
             <li class="nav-item">
                 <a class="nav-link" id="all" href="#" data-mixitup-control data-filter="all"><strong>Все</strong></a>
             </li>
@@ -49,10 +55,6 @@
                     data-filter=".genreNum{{ $genre->id }}">{{ $genre->title }}</a>
             </li>
             @endforeach
-            <li class="nav-item">
-                <a class="nav-link" id="fav" data-mixitup-control data-filter=".favour"><strong>Избранное</strong></a>
-
-            </li>
         </ul>
     </div>
 </nav>
@@ -62,8 +64,7 @@
 @section('content')
 <div class="col-md-12">
     <center>
-        <h2>Телепрограмма GigabyteTV <a href="#" data-toggle="modal" data-target="#faq"><i
-                    class='fas fa-question-circle'></i></a> </h2> <br>
+        <h2>Телепрограмма GigabyteTV</h2> <br>
     </center>
 </div>
 <div class="row channels">
@@ -77,7 +78,7 @@
             <img class="logo" src="/storage/{{ $channel->logo_path }}"> <a
                 href="{{ route('program', $channel->channel_id) }}">{{ $channel->channel_name }}</a> <a
                 class="{{ $favour_set['link'] }} favour_link" id="{{ $channel->channel_id }}"
-                name="{{ $channel->channel_name }}" onClick="favour(this);">
+                name="{{ $channel->channel_name }}">
                 <img src="/storage/images/{{ $favour_set['picture'] }}.png"
                     class="favour_image img_id{{ $channel->channel_id }}">
                 @if (Auth::check()) <a href="{{ route('logo_data', $channel->channel_id) }} "
@@ -99,8 +100,7 @@
         <div class="before">
             <strong>{{ date('H:i', strtotime($prog->time)) }}</strong>
             @if ($prog->descr_len != 0)
-            <a href="#" id="{{ $prog->id }}" class="load_description" data-toggle="modal" data-target="#basicModal"
-                onClick="description(this);">{{ $prog->name }}</a> @else
+            <a href="#" id="{{ $prog->id }}" class="description_before" data-toggle="modal" data-target="#basicModal">{{ $prog->name }}</a> @else
             {{ $prog->name }}
             @endif
         </div>
@@ -110,8 +110,7 @@
             @php $progress = ProgramList::getProgress($prog->time, $prog->time_to); @endphp
             {{ date('H:i', strtotime($prog->time)) }}
             @if ($prog->descr_len != 0)
-            <a href="#" id="{{ $prog->id }}" class="load_description" data-toggle="modal" data-target="#basicModal"
-                onClick="descriptionCurrent(this);">{{ $prog->name }}</a>
+            <a href="#" id="{{ $prog->id }}" class="current_link" data-toggle="modal" data-target="#basicModal">{{ $prog->name }}</a>
             <div class="progress" style="height: 4px;">
                 <div class="progress-bar" role="progressbar" style="width: {{ $progress }}%"
                     aria-valuenow="{{ $progress }}" aria-valuemin="0" aria-valuemax="100">
@@ -131,8 +130,7 @@
         <div class="after">
             <strong>{{ date('H:i', strtotime($prog->time)) }}</strong>
             @if ($prog->descr_len != 0)
-            <a href="#" id="{{ $prog->id }}" class="load_description" data-toggle="modal" data-target="#basicModal"
-                onClick="description(this);">{{ $prog->name }}</a> @else
+            <a href="#" id="{{ $prog->id }}" class="description_after" data-toggle="modal" data-target="#basicModal">{{ $prog->name }}</a> @else
             {{ $prog->name }}
             @endif
         </div>
@@ -188,6 +186,15 @@
                     <li>
                         Нажатие на звездочку рядом с названием канала <strong>добавит его в избранное.</strong>
                         Повторное нажатие на звездочку <strong>удалит канал из избранного.</strong>
+                    </li>
+                    <li>
+                        <i class="favour_switch far fa-star"></i> - просмотреть Ваши <strong>избранные телеканалы. </strong>
+                    </li>
+                    <li>
+                        <i class="switch fas fa-tv"></i> - просмотреть передачи, <strong>идущие в данный момент. </strong>
+                    </li>
+                    <li>
+                        <i class="fas fa-moon"></i> / <i class="fas fa-sun"></i> - применить <strong>темную или светлую тему.</strong>
                     </li>
                 </ul>
             </div>

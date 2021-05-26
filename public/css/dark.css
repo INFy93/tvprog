@@ -10,7 +10,7 @@ body
 .bg-light {
     background-color: #30322f !important;
 }
-h2, .channel_title, .channel_title a, .date_block, footer {
+h2, .channel_title, .channel_title a, .date_block, .program_name, .decription, .cat_title, .rank_link, .rank_link:hover, .controls, footer {
     color: #fefefe;
 }
 

@@ -129,9 +129,9 @@ footer {
   z-index: 1000;
 }
 #button::after {
-  content: "\f077";
-  font-family: FontAwesome;
-  font-weight: normal;
+  content: "\f062";
+  font-family: Font Awesome\ 5 Pro;
+  font-weight: 900;
   font-style: normal;
   font-size: 2em;
   line-height: 50px;
@@ -173,6 +173,13 @@ footer {
   .navbar-container .navbar-nav {
     flex-direction: column !important;
   }
+
+}
+@media (max-width: 768px) {
+    .rank_circle {
+        padding-left: 2px;
+    }
+}
 .message {
   text-align: center;
 }
@@ -186,3 +193,28 @@ footer {
 .rank_category, .popular {
     margin-top: 15px;
 }
+.rank_link {
+    color: black;
+}
+.rank_link:hover {
+    color: black;
+}
+.controls {
+    display: flex;
+    flex-direction: row;
+    margin: 0 -5px;
+    align-items: center;
+}
+.control_item {
+    flex: 1 1 auto;
+    margin: 0 5px;
+    cursor: pointer;
+    padding: 5px 0 5px 5px;
+}
+@media (max-width : 768px)
+{
+    .tooltip {
+        display: none !important;
+    }
+}
+
