@@ -211,6 +211,9 @@ footer {
     cursor: pointer;
     padding: 5px 0 5px 5px;
 }
+.black_link, .black_link:hover {
+    color: black;
+}
 @media (max-width : 768px)
 {
     .tooltip {

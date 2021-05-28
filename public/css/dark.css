@@ -10,7 +10,7 @@ body
 .bg-light {
     background-color: #30322f !important;
 }
-h2, .channel_title, .channel_title a, .date_block, .program_name, .decription, .cat_title, .rank_link, .rank_link:hover, .controls, footer {
+h2, .channel_title, .channel_title a, .date_block, .program_name, .decription, .cat_title, .rank_link, .rank_link:hover, .controls, .black_link, .black_link:hover, footer {
     color: #fefefe;
 }
 
@@ -25,7 +25,7 @@ hr {
     color: #fefefe;
 }
 .progress {
-    background-color: #007bff80 !important;
+    background-color: #002e5f !important;
 }
 .progress-bar {
     background-color: #0062cc !important;

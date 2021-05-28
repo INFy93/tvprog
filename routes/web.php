@@ -66,7 +66,7 @@ Route::get(
     'ItvController@test'
 )->name('test');
 
-Route::get('/rank',
+Route::get('/top',
     'ViewsController@index'
     )->name('rank');
 
