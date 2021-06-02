@@ -211,6 +211,9 @@ footer {
     cursor: pointer;
     padding: 5px 0 5px 5px;
 }
+.favour_switch, .favour_star {
+    cursor: pointer;
+}
 .black_link, .black_link:hover {
     color: black;
 }

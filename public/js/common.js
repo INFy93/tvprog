@@ -158,21 +158,20 @@ function onlyCurrentDark() { //showing only current TV-programs on clicking by c
         $('.current a').css('font-weight', 'bold');
     }
 }
-$('.favour_link').on('click', favour)
+$(document.body).on('click', '.favour_star', favour);
 function favour() { //adding to favour
-
-    let getvalue = $(this).attr('id'); //getting channel ID
-    let name = $(this).attr('name'); //channel name for popup
+    const that = this;
+    let getvalue = $(this).parent().attr('id'); //getting channel ID
+    let name = $(this).parent().attr('name'); //channel name for popup
     let div = $("#" + getvalue).parents('.mix')[0]; //getting name of 'channel'-div
 
-    if ($(this).hasClass('add_favour')) {//if channel isn't in favour list
+    if ($(this).attr('data-prefix') == 'far') {//if channel isn't in favour list
         $.ajax({
             type: "GET", //data type
             url: "/cookie/set/" + getvalue, //route for cookie controller
         }).done(function (html) { //if success
-            $("#" + getvalue).removeClass("add_favour"); //remove class
-            $("#" + getvalue).addClass("delete_favour"); //adding class
-            $(".img_id" + getvalue).attr("src", "/storage/images/favour_active.png"); //changing picture
+            $(that).attr('data-prefix', 'fas');
+            $(that).parent().attr('data-original-title', 'Убрать из Избранного').tooltip('show');
             $(div).removeClass("genreNum" + getvalue); //removing old sort class
             $(div).addClass("favour"); //adding new sort class
             toastr.success('Телеканал "' + name + '" успешно добавлен в избранное!'); //popup success
@@ -180,14 +179,13 @@ function favour() { //adding to favour
             toastr.error('Произошла ошибка, попробуйте позже.') //popup error
         });
     }
-    else if ($(this).hasClass('delete_favour')) { //if channel is in favour list
+    else if ($(this).attr('data-prefix') == 'fas') { //if channel is in favour list
         $.ajax({
             type: "GET", //data type
             url: "/cookie/delete/" + getvalue, //route for deleting channel from cookie
         }).done(function (html) {
-            $("#" + getvalue).removeClass("delete_favour"); //deleting old class
-            $("#" + getvalue).addClass("add_favour"); //adding new class
-            $(".img_id" + getvalue).attr("src", "/storage/images/favour_ready.png"); //changing image
+            $(that).attr('data-prefix', 'far');
+            $(that).parent().attr('data-original-title', 'Добавить в Избранное').tooltip('show');
             $(div).removeClass("favour"); //deleting favour class
             if ($("#fav").hasClass("mixitup-control-active")) { //updating favour section view
                 $('#fav')[0].click();

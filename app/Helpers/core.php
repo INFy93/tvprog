@@ -108,18 +108,15 @@ class Helpers
     public static function getFavourSet($channel_id, $cookie_set) //формируем тип картинки, класс ссылки и блок для избранного
     {
         if (in_array($channel_id, $cookie_set)) {
-            $picture = 'favour_active';
-            $link_class = 'delete_favour';
+            $marker = 'fas';
             $div = 'favour';
         } else {
-            $picture = 'favour_ready';
-            $link_class = 'add_favour';
+            $marker = 'far';
             $div = '';
         }
 
-        return $favour_set = [
-            'picture' => $picture,
-            'link' => $link_class,
+        return $favour = [
+            'marker' => $marker,
             'div' => $div
         ];
     }
