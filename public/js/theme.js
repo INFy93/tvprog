@@ -19,9 +19,6 @@ function ChangeTheme() {
         panel.classList.remove("bg-light");
         panel.classList.add("bg-dark");
 
-        $('#onlyCurrent').removeClass('switch');
-        $('#onlyCurrent').addClass('switch_dark');
-
         $(this).attr("data-icon", 'sun');
 
         $(this).parent().attr('data-original-title', 'Светлая тема').tooltip('show');
@@ -36,9 +33,6 @@ function ChangeTheme() {
         theme = "app";
         panel.classList.remove("bg-dark");
         panel.classList.add("bg-light");
-
-        $('#onlyCurrent').removeClass('switch_dark');
-        $('#onlyCurrent').addClass('switch');
 
         $(this).parent().attr('data-original-title', 'Темная тема').tooltip('show');
 

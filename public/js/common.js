@@ -132,38 +132,35 @@ function onlyCurrent() { //showing only current TV-programs on clicking by check
         $('.before').hide();
         $('.after').hide();
         $('current').after('channel_title');
-        $('.current').css('color', 'black');
-        $('.current a').css('color', 'black');
-        $('.current a').css('font-weight', 'normal');
+        if ($('#theme-button').attr('data-icon') == 'moon')
+            {
+                $('.current').css('color', 'black');
+                $('.current a').css('color', 'black');
+                $('.current a').css('font-weight', 'normal');
+            }
+        else if ($('#theme-button').attr('data-icon') == 'sun')
+            {
+                $('.current').css('color', '#fefefe');
+                $('.current a').css('color', '#fefefe');
+                $('.current a').css('font-weight', 'normal');
+            }
+
     } else if ($(this).attr('data-prefix') == 'fad') {
         $(this).attr('data-prefix', 'fas');
         $(this).parent().attr('data-original-title', 'Текущие передачи').tooltip('show');
         $('.before').show();
         $('.after').show();
-        $('.current').css('color', '#0066ff');
-        $('.current a').css('color', '#0066ff');
-        $('.current a').css('font-weight', 'bold');
-    }
-}
-$(document.body).on('click', '.switch_dark', onlyCurrentDark);
-function onlyCurrentDark() { //showing only current TV-programs on clicking by checkbox
-    if ($(this).attr('data-prefix') == 'fas') {
-        $(this).attr('data-prefix', 'fad');
-        $(this).parent().attr('data-original-title', 'Все передачи').tooltip('show');
-        $('.before').hide();
-        $('.after').hide();
-        $('current').after('channel_title');
-        $('.current').css('color', '#fefefe');
-        $('.current a').css('color', '#fefefe');
-        $('.current a').css('font-weight', 'normal');
-    } else if ($(this).attr('data-prefix') == 'fad') {
-        $(this).attr('data-prefix', 'fas');
-        $(this).parent().attr('data-original-title', 'Текущие передачи').tooltip('show');
-        $('.before').show();
-        $('.after').show();
-        $('.current').css('color', '#fefefe');
-        $('.current a').css('color', '#fefefe');
-        $('.current a').css('font-weight', 'bold');
+        if ($('#theme-button').attr('data-icon') == 'moon')
+        {
+            $('.current').css('color', '#0066ff');
+            $('.current a').css('color', '#0066ff');
+            $('.current a').css('font-weight', 'bold');
+        } else if ($('#theme-button').attr('data-icon') == 'sun')
+        {
+            $('.current').css('color', '#fefefe');
+            $('.current a').css('color', '#fefefe');
+            $('.current a').css('font-weight', 'bold');
+        }
     }
 }
 $(document.body).on('click', '.favour_star', favour);
