@@ -28,7 +28,7 @@ class TariffController extends Controller
             }
 
             $channel_list = CachedChannels::where('category', '<=', $id)->orderBy('number')->get();
-            //dd($channel_list);
+
             $brake_point = ceil($channel_list->count() / $rows['count']); //считаем, сколько каналов у нас будет в каждом столбце
 
             return view('t-list', ['channels' => $channel_list, 'rows' => $rows])->with('brake', $brake_point);
