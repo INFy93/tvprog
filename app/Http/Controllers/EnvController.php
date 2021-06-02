@@ -16,7 +16,6 @@ class EnvController extends Controller
     public function changeSettings(Request $request)
     {
         $input = $request->except(['_token']);
-        //dd($input);
         foreach ($input as $name => $option)
         {
             $results = Option::where('name','=', $name)->first();
