@@ -18,7 +18,7 @@ session(['theme' => 'app']);
     <title>@yield('title')</title>
 </head>
 
-<body>
+<body class="main_page">
     <a id="button"></a>
 
     @include('inc.header')

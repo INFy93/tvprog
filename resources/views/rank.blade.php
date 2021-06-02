@@ -30,16 +30,15 @@
     </div>
     @foreach ($start as $st)
     @php
-    $favour_set_st = Helpers::getFavourSet($st->ch_id, $ids)
+    $marker_st = Helpers::getFavourSet($st->ch_id, $ids)
     @endphp
     <div class="col-md-3 channel_item">
         <h5 class="channel_title">
             <img class="logo" src="/storage/{{ $st->logo }}"> <a
             href="{{ route('program', $st->ch_id) }}">{{ $st->name }}</a> <a
-            class="{{ $favour_set_st['link'] }} favour_link" id="{{ $st->ch_id }}"
-            name="{{ $st->name }}">
-            <img src="/storage/images/{{ $favour_set_st['picture'] }}.png"
-                class="favour_image img_id{{ $st->ch_id }}">
+            id="{{ $st->ch_id }}" name="{{ $st->name }}" data-toggle="tooltip"
+            data-placement="bottom" title="Добавить в Избранное"><i
+                class="favour_star {{ $marker_st['marker'] }} fa-star"></i></a>
         </h5>
         @php
         $program = ProgramList::getCurrentProgram($st->ch_id);
@@ -77,16 +76,15 @@
     </div>
     @foreach ($baza as $bz)
     @php
-    $favour_set_bz = Helpers::getFavourSet($bz->ch_id, $ids)
+    $marker_bz = Helpers::getFavourSet($st->ch_id, $ids)
     @endphp
     <div class="col-md-3 channel_item">
         <h5 class="channel_title">
             <img class="logo" src="/storage/{{ $bz->logo }}"> <a
             href="{{ route('program', $bz->ch_id) }}">{{ $bz->name }}</a> <a
-            class="{{ $favour_set_bz['link'] }} favour_link" id="{{ $bz->ch_id }}"
-            name="{{ $bz->name }}" onClick="favour(this);">
-            <img src="/storage/images/{{ $favour_set_bz['picture'] }}.png"
-                class="favour_image img_id{{ $bz->ch_id }}">
+            id="{{ $bz->ch_id }}" name="{{ $bz->name }}" data-toggle="tooltip"
+            data-placement="bottom" title="Добавить в Избранное"><i
+                class="favour_star {{ $marker_bz['marker'] }} fa-star"></i></a>
         </h5>
         @php
         $program = ProgramList::getCurrentProgram($bz->ch_id);
@@ -124,16 +122,15 @@
     </div>
     @foreach ($premium as $prem)
     @php
-    $favour_set_p = Helpers::getFavourSet($prem->ch_id, $ids)
+    $marker_p = Helpers::getFavourSet($prem->ch_id, $ids)
     @endphp
     <div class="col-md-3 channel_item">
         <h5 class="channel_title">
             <img class="logo" src="/storage/{{ $prem->logo }}"> <a
             href="{{ route('program', $prem->ch_id) }}">{{ $prem->name }}</a> <a
-            class="{{ $favour_set_p['link'] }} favour_link" id="{{ $prem->ch_id }}"
-            name="{{ $prem->name }}" onClick="favour(this);">
-            <img src="/storage/images/{{ $favour_set_p['picture'] }}.png"
-                class="favour_image img_id{{ $prem->ch_id }}">
+            id="{{ $prem->ch_id }}" name="{{ $prem->name }}" data-toggle="tooltip"
+            data-placement="bottom" title="Добавить в Избранное"><i
+                class="favour_star {{ $marker_p['marker'] }} fa-star"></i></a>
         </h5>
         @php
         $program = ProgramList::getCurrentProgram($prem->ch_id);
@@ -171,17 +168,15 @@
     </div>
     @foreach ($tv1000 as $t1000)
     @php
-    $favour_set_t = Helpers::getFavourSet($t1000->ch_id, $ids);
-    //dd($ids);
+    $marker_t = Helpers::getFavourSet($t1000->ch_id, $ids);
     @endphp
     <div class="col-md-3 channel_item">
         <h5 class="channel_title">
             <img class="logo" src="/storage/{{ $t1000->logo }}"> <a
             href="{{ route('program', $t1000->ch_id) }}">{{ $t1000->name }}</a> <a
-            class="{{ $favour_set_t['link'] }} favour_link" id="{{ $t1000->ch_id }}"
-            name="{{ $t1000->name }}" onClick="favour(this);">
-            <img src="/storage/images/{{ $favour_set_t['picture'] }}.png"
-                class="favour_image img_id{{ $t1000->ch_id }}">
+            id="{{ $t1000->ch_id }}" name="{{ $t1000->name }}" data-toggle="tooltip"
+            data-placement="bottom" title="Добавить в Избранное"><i
+                class="favour_star {{ $marker_t['marker'] }} fa-star"></i></a>
         </h5>
         @php
         $program = ProgramList::getCurrentProgram($t1000->ch_id);

@@ -6,26 +6,28 @@ $(document).ready(function () { //setting up mixit
     });
 
     $('.no_favour').hide();
+    if ($('body.main_page').length) {
 
-    mixitup('.channels', {
-        selectors: {
-            control: '[data-mixitup-control]'
-        },
-        // callbacks onMixEnd
-        callbacks: {
-            onMixEnd: function (state) {
-                // hasFailed true? show alert
-                if (state.hasFailed) {
-                    $('.no_favour').show();
-                }
-                // hasFailed false? hide alert
-                else {
-                    $('.no_favour').hide();
-                }
+        mixitup('.channels', {
+            selectors: {
+                control: '[data-mixitup-control]'
             },
+            // callbacks onMixEnd
+            callbacks: {
+                onMixEnd: function (state) {
+                    // hasFailed true? show alert
+                    if (state.hasFailed) {
+                        $('.no_favour').show();
+                    }
+                    // hasFailed false? hide alert
+                    else {
+                        $('.no_favour').hide();
+                    }
+                },
 
-        }, //end of callback
-    });
+            }, //end of callback
+        });
+    }
     toastr.options = { //setting up popup of adding/deleting to/from favour channels list
         "closeButton": true,
         "debug": false,
@@ -58,7 +60,7 @@ $(document).ready(function () { //setting up mixit
     });
     $('[data-toggle="tooltip"]').tooltip({
         trigger: 'hover'
-      });
+    });
 });
 $('.description_before, .description_after').on('click', description);
 function description() { //showing description of TV-program
@@ -81,7 +83,7 @@ function description() { //showing description of TV-program
 $('.current_link, .rank_link, .read_more').on('click', descriptionCurrent);
 function descriptionCurrent() { //showing description of TV-program
     let d_id = $(this).attr('id'); //takin' TV-program ID
-  let route = '/descr/current/' + d_id; //preparing route
+    let route = '/descr/current/' + d_id; //preparing route
     let timestamp = new Date().getTime();
     $.ajax({
         type: 'GET',
@@ -98,24 +100,30 @@ function descriptionCurrent() { //showing description of TV-program
     });
 }
 
-$(document.body).on('click', '.favour_switch', favourSwitch);
-function favourSwitch()
-{
-  //$(this).parent().attr('data-filter')
-  if($(this).attr('data-prefix') == 'far')
-  {
-      $(this).attr('data-prefix', 'fas');
-      $(this).parent().attr('data-filter', '.all');
-      $(this).parent().attr('data-original-title', 'Все телеканалы').tooltip('show');
-  } else if ($(this).attr('data-prefix') == 'fas')
-  {
-    $(this).attr('data-prefix', 'far');
-    $(this).parent().attr('data-filter', '.favour');
-    $(this).parent().attr('data-original-title', 'Избранное').tooltip('show');
-    $('#all')[0].click();
-  }
+$(document.body).on('click', '.favour_switch', favourSwitch); //favour star function
+function favourSwitch() {
+    if ($(this).attr('data-prefix') == 'far') {
+        $(this).attr('data-prefix', 'fas');
+        $(this).parent().attr('data-filter', '.all');
+        $(this).parent().attr('data-original-title', 'Все телеканалы').tooltip('show');
+    } else if ($(this).attr('data-prefix') == 'fas') {
+        $(this).attr('data-prefix', 'far');
+        $(this).parent().attr('data-filter', '.favour');
+        $(this).parent().attr('data-original-title', 'Избранное').tooltip('show');
+        $('#all')[0].click();
+    }
 }
+$(document.body).on('click', '.nav-link', noFavour);
+function noFavour()
+{
+    if($('.favour_switch').attr('data-prefix') == 'fas')
+    {
+        $('.favour_switch').attr('data-prefix', 'far');
+        $('.favour_switch').parent().attr('data-filter', '.favour');
+        $('.favour_switch').parent().attr('data-original-title', 'Избранное');
+    }
 
+}
 $(document.body).on('click', '.switch', onlyCurrent);
 function onlyCurrent() { //showing only current TV-programs on clicking by checkbox
     if ($(this).attr('data-prefix') == 'fas') {
@@ -172,7 +180,6 @@ function favour() { //adding to favour
         }).done(function (html) { //if success
             $(that).attr('data-prefix', 'fas');
             $(that).parent().attr('data-original-title', 'Убрать из Избранного').tooltip('show');
-            $(div).removeClass("genreNum" + getvalue); //removing old sort class
             $(div).addClass("favour"); //adding new sort class
             toastr.success('Телеканал "' + name + '" успешно добавлен в избранное!'); //popup success
         }).fail(function (html) {

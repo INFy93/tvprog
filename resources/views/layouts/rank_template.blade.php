@@ -1,17 +1,9 @@
 <!DOCTYPE html lang="ru">
-@php
-if (session('min_percent') == null)
-{
-session(['min_percent' => 'app']);
-}
-@endphp
-
 <head>
     <link rel="stylesheet" href="/css/app.css?v=<?php echo filectime('css/app.css'); ?>">
     <link rel="stylesheet" href="/css/{{ session('theme') }}.css" id="theme-link">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{{ asset('css/font-awesome/all.min.css') }}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <link href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="pragma" content="no-cache">
     <meta http-equiv="Refresh" content="300" />
@@ -55,9 +47,7 @@ session(['min_percent' => 'app']);
 </script>
 <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mixitup/3.3.1/mixitup.min.js"
-    integrity="sha512-nKZDK+ztK6Ug+2B6DZx+QtgeyAmo9YThZob8O3xgjqhw2IVQdAITFasl/jqbyDwclMkLXFOZRiytnUrXk/PM6A=="
-    crossorigin="anonymous"></script>
+<script src="{{ asset('css/font-awesome/all.min.js') }}" data-auto-replace-svg></script>
 <script async type="text/javascript" src="{{ asset('js/common.js') }}?v=<?php echo filectime('js/common.js'); ?>">
 </script>
 <script async type="text/javascript" src="{{ asset('js/theme.js') }}?v=<?php echo filectime('js/theme.js'); ?>">

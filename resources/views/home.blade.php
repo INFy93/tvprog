@@ -75,10 +75,13 @@
     <div class="mix col-md-3 channel_item genreNum{{ $channel->genre_id }} {{ $marker['div'] }}">
         <h5 class="channel_title">
             <img class="logo" src="/storage/{{ $channel->logo_path }}"> <a
-                href="{{ route('program', $channel->channel_id) }}">{{ $channel->channel_name }}</a>  <a id="{{ $channel->channel_id }}" name="{{ $channel->channel_name }}"  data-toggle="tooltip" data-placement="bottom" title="Добавить в Избранное"><i class="favour_star {{ $marker['marker'] }} fa-star"></i></a>
-                @if (Auth::check()) <a href="{{ route('logo_data', $channel->channel_id) }} "
-                    class="badge badge-info">Изменить
-                    лого</a>@endif
+                href="{{ route('program', $channel->channel_id) }}">{{ $channel->channel_name }}</a> <a
+                id="{{ $channel->channel_id }}" name="{{ $channel->channel_name }}" data-toggle="tooltip"
+                data-placement="bottom" title="Добавить в Избранное"><i
+                    class="favour_star {{ $marker['marker'] }} fa-star"></i></a>
+            @if (Auth::check()) <a href="{{ route('logo_data', $channel->channel_id) }} "
+                class="badge badge-info">Изменить
+                лого</a>@endif
         </h5>
         @php
         $program = ProgramList::getProgram($channel->channel_id, 1);
