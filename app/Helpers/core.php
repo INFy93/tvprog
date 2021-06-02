@@ -5,7 +5,6 @@ namespace App\Helpers;
 use DB;
 use App\Models\Epg;
 use App\Models\Itv;
-use App\Models\Logos;
 use Illuminate\Support\Facades\Http;
 
 class ProgramList
@@ -42,10 +41,10 @@ class ProgramList
     {
         $time = date("Y-m-d H:i:s");
         $program = Epg::where([
-                ['ch_id', '=', $ch_id],
-                ['time', '<=', $time],
-                ['time_to', '>', $time]
-            ])
+            ['ch_id', '=', $ch_id],
+            ['time', '<=', $time],
+            ['time_to', '>', $time]
+        ])
             ->first();
 
         return $program;
@@ -98,13 +97,6 @@ class Helpers
         return $month_name . $week_day;
     }
 
-    public static function getLogo($channel_id)
-    {
-        $logo = Logos::where('ch_id', $channel_id)->first();
-
-        return $logo;
-    }
-
     public static function getFavourSet($channel_id, $cookie_set) //формируем тип картинки, класс ссылки и блок для избранного
     {
         if (in_array($channel_id, $cookie_set)) {
@@ -119,17 +111,6 @@ class Helpers
             'marker' => $marker,
             'div' => $div
         ];
-    }
-
-    public static function checkLogo($logo)
-    {
-        if ($logo) {
-            $path = $logo->path;
-        } else {
-            $path = 'images/no_logo.png';
-        }
-
-        return $path;
     }
 
     public static function cutString($string)
