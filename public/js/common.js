@@ -6,7 +6,7 @@ $(document).ready(function () { //setting up mixit
     });
 
     $('.no_favour').hide();
-    if ($('body.main_page').length) {
+    if ($('body.main_page').length) { //mixit only on main page
 
         mixitup('.channels', {
             selectors: {
@@ -58,7 +58,8 @@ $(document).ready(function () { //setting up mixit
         e.preventDefault();
         $('html, body').animate({ scrollTop: 0 }, '300');
     });
-    $('[data-toggle="tooltip"]').tooltip({
+
+    $('[data-toggle="tooltip"]').tooltip({ //tooltips
         trigger: 'hover'
     });
 });
@@ -113,7 +114,7 @@ function favourSwitch() {
         $('#all')[0].click();
     }
 }
-$(document.body).on('click', '.nav-link', noFavour);
+$(document.body).on('click', '.nav-link', noFavour); //clicking on category link will clear favour icon (if it is pressed)
 function noFavour()
 {
     if($('.favour_switch').attr('data-prefix') == 'fas')
@@ -132,13 +133,13 @@ function onlyCurrent() { //showing only current TV-programs on clicking by check
         $('.before').hide();
         $('.after').hide();
         $('current').after('channel_title');
-        if ($('#theme-button').attr('data-icon') == 'moon')
+        if ($('#theme-button').attr('data-icon') == 'moon') //light theme
             {
                 $('.current').css('color', 'black');
                 $('.current a').css('color', 'black');
                 $('.current a').css('font-weight', 'normal');
             }
-        else if ($('#theme-button').attr('data-icon') == 'sun')
+        else if ($('#theme-button').attr('data-icon') == 'sun') //dark theme
             {
                 $('.current').css('color', '#fefefe');
                 $('.current a').css('color', '#fefefe');
@@ -150,12 +151,12 @@ function onlyCurrent() { //showing only current TV-programs on clicking by check
         $(this).parent().attr('data-original-title', 'Текущие передачи').tooltip('show');
         $('.before').show();
         $('.after').show();
-        if ($('#theme-button').attr('data-icon') == 'moon')
+        if ($('#theme-button').attr('data-icon') == 'moon') //light theme
         {
             $('.current').css('color', '#0066ff');
             $('.current a').css('color', '#0066ff');
             $('.current a').css('font-weight', 'bold');
-        } else if ($('#theme-button').attr('data-icon') == 'sun')
+        } else if ($('#theme-button').attr('data-icon') == 'sun') //dark theme
         {
             $('.current').css('color', '#fefefe');
             $('.current a').css('color', '#fefefe');
@@ -165,7 +166,7 @@ function onlyCurrent() { //showing only current TV-programs on clicking by check
 }
 $(document.body).on('click', '.favour_star', favour);
 function favour() { //adding to favour
-    const that = this;
+    const that = this; //const to changing icon
     let getvalue = $(this).parent().attr('id'); //getting channel ID
     let name = $(this).parent().attr('name'); //channel name for popup
     let div = $("#" + getvalue).parents('.mix')[0]; //getting name of 'channel'-div
@@ -175,8 +176,8 @@ function favour() { //adding to favour
             type: "GET", //data type
             url: "/cookie/set/" + getvalue, //route for cookie controller
         }).done(function (html) { //if success
-            $(that).attr('data-prefix', 'fas');
-            $(that).parent().attr('data-original-title', 'Убрать из Избранного').tooltip('show');
+            $(that).attr('data-prefix', 'fas'); //change icon
+            $(that).parent().attr('data-original-title', 'Убрать из Избранного').tooltip('show'); //update popup
             $(div).addClass("favour"); //adding new sort class
             toastr.success('Телеканал "' + name + '" успешно добавлен в избранное!'); //popup success
         }).fail(function (html) {
@@ -188,8 +189,8 @@ function favour() { //adding to favour
             type: "GET", //data type
             url: "/cookie/delete/" + getvalue, //route for deleting channel from cookie
         }).done(function (html) {
-            $(that).attr('data-prefix', 'far');
-            $(that).parent().attr('data-original-title', 'Добавить в Избранное').tooltip('show');
+            $(that).attr('data-prefix', 'far'); //change icon
+            $(that).parent().attr('data-original-title', 'Добавить в Избранное').tooltip('show'); //update popup
             $(div).removeClass("favour"); //deleting favour class
             if ($("#fav").hasClass("mixitup-control-active")) { //updating favour section view
                 $('#fav')[0].click();
