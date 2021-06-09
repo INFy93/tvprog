@@ -19,13 +19,8 @@
                         data-mixitup-control data-filter=".favour"><i class="favour_switch far fa-star"></i></a>
                 </div>
                 <div class="control_item">
-                    @if(session('theme') == 'dark')
-                    <a data-toggle="tooltip" data-placement="bottom" title="Текущие передачи"><i
-                            class="switch_dark fas fa-tv" id="onlyCurrent"></i></a>
-                    @else
                     <a data-toggle="tooltip" data-placement="bottom" title="Текущие передачи"><i
                             class="switch fas fa-tv" id="onlyCurrent"></i></a>
-                    @endif
                 </div>
                 <div class="control_item">
                     <a href="{{route('rank')}}" class="black_link" data-toggle="tooltip" data-placement="bottom"
