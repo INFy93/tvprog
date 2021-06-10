@@ -199,6 +199,14 @@ footer {
 .rank_link:hover {
     color: black;
 }
+.rank_title {
+    margin-top: 50px;
+}
+.populars {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    margin-top: -20px;
+}
 .controls {
     display: flex;
     flex-direction: row;

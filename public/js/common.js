@@ -62,6 +62,9 @@ $(document).ready(function () { //setting up mixit
     $('[data-toggle="tooltip"]').tooltip({ //tooltips
         trigger: 'hover'
     });
+    $('[rel="tooltip"]').on('click', function () {
+        $(this).tooltip('hide')
+    })
 });
 $('.description_before, .description_after').on('click', description);
 function description() { //showing description of TV-program
